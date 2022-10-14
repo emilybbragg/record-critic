@@ -5,9 +5,145 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url("https://www.yankodesign.com/images/design_news/2020/10/a-record-player-pays-homage-to-its-retro-roots-while-embracing-the-future/1_Keonwoo-Lee_Old-Future-Turntable_vinyl-record-player.jpg")
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.title {
+  font-family: cursive;
+  text-align: center;
+  font-size: 60px;
+  color: white;
+  letter-spacing: 8px;
+  font-weight: bold;
+}
+
+.tagline {
+  font-family: didot;
+  text-align: center;
+  color: white;
+}
+
+.signupButton {
+  text-align: center;
+  color: white;
+}
+
+.loginButton {
+  text-align: center;
+  color: white;
+}
+
+.newaccount {
+  color: white;
+}
+
+.nav {
+  text-align: center;
+  background-color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  color: black;
+  box-shadow: 2px 2px black;
+  font-size: 15px;
+  float: left;
+  margin-right: 10px;
+  margin-left: 10px;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.welcome{
+  font-family: didot;
+  color: #ffffff;
+  text-shadow: 1px 1px #03045e;
+  font-size: 40px;
+  text-align: left;
+  padding-top: 10px;
+  margin: 0 auto;
+  margin-left: 25px;
+}
+
+.nav-bar {
+  margin: auto;
+  text-align: center;
+  width: 100%;
+  padding: 10px;
+  background-color: #FF7F50;
+  opacity: .6;
+  font-family: "Andale Mono", AndaleMono, monospace;
+  display: flex;
+}
+
+.links {
+  font-family: didot;
+  font-size: 25px;
+  margin-top: 20px;
+  margin-right: 25px;
+}
+
+.logout {
+  text-align: center;
+  background-color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  color: black;
+  box-shadow: 1px 1px black;
+  font-size: 15px;
+  float: left;
+  margin-right: 10px;
+  margin-left: 10px;
+  padding: 10px;
+  text-decoration: none;
+  font-family: didot;
+
+}
+
+.albumimage {
+    width: 50%;
+    height: 50%;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.albumdisplay {
+  color: white;
+  font-family: didot;
+  font-size: 25px;
+}
+
+.albumdisplayitem {
+  text-align: center;
+}
+
+.hometagline {
+  color: white;
+  font-family: didot;
+  font-size: 35px;
+  text-align: center;
+  text-shadow: 1px 1px #03045e;
+}
+
+.albumlist {
+  columns: 2;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+}
+
+.albumForm {
+  width: 50%;
+  height: 50%;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.reviewForm {
+    width: 50%;
+    height: 50%;
+    border-radius: 20px;
+    text-align: center;
 }
