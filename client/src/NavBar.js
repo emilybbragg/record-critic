@@ -1,42 +1,37 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from 'react-router-dom';
+// import styled from "styled-components";
 
-function NavBar( { user, setUser }) {
+function NavBar({ user, setUser }) {
+  const navigate = useNavigate()
 
-  // function handleLogout() {
-  //   fetch("/logout", {
-  //     method: "DELETE",
-  //   }).then(() => onLogout());
-  // }
+  useEffect(() => {
+    if (!user) {
+      navigate("/")
+    }
+  }, [])
 
-  function handleLogout() {
+  function handleLogoutClick() {
     fetch("/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
         setUser(null);
+        // redirect to /login
+        navigate("/")
       }
     });
   }
 
   return (
-    
-    <div className="navigation">
-      <NavBar user={user} setUser={setUser} />
-      <Navbar bg="light" variant="light" className="navBar">
-        <div className="navContainer">
-         <div className="title">Record Critic</div>
-          <Nav className="navLinks">
-          <Nav.Link as={NavLink} to="/albums">Albums</Nav.Link>
-          <Nav.Link as={NavLink} to="/myalbums">My Albums</Nav.Link>
-          <Nav.Link as={NavLink} to="/logout">Logout</Nav.Link>
-         </Nav>
-        </div>
-        <header>
-          <button onClick={handleLogout}>Logout</button>
-        </header>
-      </Navbar>
-    </div>
+    <>
+      <div className="nav-bar">
+        <p className="welcome">Welcome, {user.username}!</p>
+          <div className="links">
+            <Link to="/albums" className="nav"> Albums </Link>
+            <Link to="/myreviews" className="nav"> My Reviews </Link>
+            <button onClick={handleLogoutClick} className="logout">Logout</button>
+          </div>
+      </div>
+    </>
   )
 }
 
