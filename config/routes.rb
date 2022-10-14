@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
   
-  resources :albums
-  resources :reviews
-  resources :users, only:[:show, :create]
+  resources :albums, only: [:index, :show, :create] do
+    resources :reviews, only: [:index, :create]
+  end
+
+  resources :reviews, only: [:index, :create, :update, :delete]
+  # resources :users, only:[:show, :create]
 
   post "/login", to: "sessions#create"
   get "/me", to: "users#show"
