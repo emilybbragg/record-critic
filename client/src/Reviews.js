@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useParams } from "react";
 import styled from "styled-components";
 import FormField from "./styles/FormField.js";
 import Input from "./styles/Input.js";
@@ -12,20 +12,11 @@ function Reviews({ user }) {
   const [reviewDescription, setReviewDescription] = useState("");
   const [reviewRating, setReviewRating] = useState("");
   // const albumId, setAlbumId = useState("")
-
-
-  useEffect(() => {
-    //get id params -- set id as state variable
-    //  const albumIdFromParams = params[:id] // google how to get this from react-router-dom(?)
-    // setAlbumId(albumIdFromparams)
-    console.log("ALBUM REVIEWS PAGE")
-    console.log(user)
-    // fetch("/albums/${albumIdFromParams}")
-    //   .then((r) => r.json())
-    //   .then(reviews => setReviews(reviews))
-  }, []);
- 
-
+  // useEffect(() => {
+  //   fetch(`/albums/${albumId}`)
+  //     .then((r) => r.json())
+  //     .then(reviews => setReviews(reviews))
+  // }, []);
 
 
   function handleReviewSubmit(e) {
@@ -57,14 +48,15 @@ function Reviews({ user }) {
 
 return (
   <Wrapper>
-    
+
     <h1 className="reviewTagline">This album's reviews</h1>
     {reviews?.length > 0 ? (
       reviews.map((review) => (
         <Review key={review.id}>
           <ul className="reviewdisplayitem">
             <div className="reviewdisplay">
-              {review.title} - {review.description} - {review.rating}
+           
+              {/* {review.title} - {review.description} - {review.rating} */}
             </div>
           </ul>
        </Review >
@@ -75,7 +67,7 @@ return (
     </>
     )}
 
-    {/* <form className="reviewForm" onSubmit={handleReviewSubmit}>
+    <form className="reviewForm" onSubmit={handleReviewSubmit}>
       <FormField>
         <Label htmlFor="titleInput">Review Name:</Label>
         <Input type="text" id="title" value={reviewTitle} onChange={(e) => setReviewTitle(e.target.value)}/>
@@ -95,7 +87,7 @@ return (
         <Button type="submit">Submit</Button>
       </FormField>
 
-    </form> */}
+    </form>
 
 
 
