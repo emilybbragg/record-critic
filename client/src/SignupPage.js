@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Error from "./styles/Error.js";
+import SignupError from "./styles/SignupError.js";
 import FormField from "./styles/FormField.js";
 import Button from "./styles/Button.js";
 import Input from "./styles/Input.js";
@@ -23,14 +23,15 @@ function SignupPage( { onLogin }) {
     body: JSON.stringify({
       username,
       password,
-      password_confirmation: passwordConfirmation,
+      password_confirmation: passwordConfirmation
     }),
   }).then((r) => {
     if (r.ok) {
       r.json().then((user) => onLogin(user));
-      console.log("you are logged in")
     } else {
-      r.json().then((err) => setErrors(err.errors));
+      r.json().then((err) => {
+        setErrors([err.error]);
+      })
     }
   });
 }
@@ -58,7 +59,7 @@ function SignupPage( { onLogin }) {
 
       <FormField>
         {errors.map((err) => (
-          <Error key={err}>{err}</Error>
+          <SignupError key={err}>{err}</SignupError>
         ))}
       </FormField>
     </form>
