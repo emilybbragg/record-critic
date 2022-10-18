@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   
   resources :albums, only: [:index, :show, :create] do
-    resources :reviews, only: [:index, :create]
+    resources :reviews, only: [:index, :show]
   end
 
-  resources :reviews, only: [:index, :create, :update, :delete]
+  resources :reviews, only: [:index, :create, :update, :destroy]
   # resources :users, only:[:show, :create]
 
   post "/login", to: "sessions#create"
