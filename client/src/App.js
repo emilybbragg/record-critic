@@ -4,13 +4,12 @@ import LoginPage from "./LoginPage";
 import SignupPage from "./SignupPage";
 import AlbumsPage from "./AlbumsPage";
 import NavBar from "./NavBar";
-import Reviews from "./Reviews";
 import AlbumItemPage from "./AlbumItemPage";
+import MyReviewsPage from "./MyReviewsPage";
 
 function App() {
   const navigate = useNavigate()
   const [user, setUser] = useState(null);
-  // const [currentAlbum, setCurrentAlbum] = useState("")
 
   //For keeping user logged in
   useEffect(() => {
@@ -37,11 +36,7 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/albums" element={user ? <AlbumsPage /> : <Navigate to="/" />} />
           <Route path="/albums/:albumId" element={<AlbumItemPage user={user}/>} />
-
-
-
-          {/* // {user ? <Reviews /> : <Navigate to="/" />}/> */}
-          {/* <Route path="/myreviews" element={<MyReviews />} /> */}
+          <Route path="/myreviews" element={<MyReviewsPage />} />
         </Routes>
     </div>
   );
