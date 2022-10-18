@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-function Error({ children }) {
+function Error() {
   return (
     <Wrapper>
       <Alert>!</Alert>
-      <Message>{children}</Message>
+      <Message>Incorrect Username or Password</Message>
     </Wrapper>
   );
 }
