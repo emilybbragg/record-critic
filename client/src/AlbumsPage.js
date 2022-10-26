@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import FormField from "./styles/FormField.js";
 import Input from "./styles/Input.js";
@@ -16,7 +16,6 @@ function AlbumsPage() {
   const [albumImage, setAlbumImage] = useState([]);
 
   const navigate = useNavigate();
-  // const {albumId} = useParams();
 
   const navigateToReviews = (albumId) => {
     navigate(`/albums/${albumId}`);
@@ -26,7 +25,7 @@ function AlbumsPage() {
     fetch("/albums")
       .then((r) => r.json())
       .then(albums => setAlbums(albums))
-  }, []);
+  }, [])
 
   function handleAlbumSubmit(e) {
     e.preventDefault();
@@ -54,73 +53,68 @@ function AlbumsPage() {
       })
 }
 
-console.log(albums)
+const [dataIndex, setDataIndex] = useState(0)
 
-//POSSIBLE CODE FOR DISPLAYING # ALBUMS AT A TIME
-  // const [dataIndex, setDataIndex] = useState(0)
-  // // const [albumData, setAlbumData] = useState([]);
-
-  // const albumItems = [...albums]
-  //   .slice(dataIndex, dataIndex + 3)
-
-  //   .map((album) => 
-  //   <Albums 
-  //     key={album.id}
-  //     name={album.name}
-  //     artist={album.artist}
-  //   />
-  // )
-
-
-  // const allAlbums = albums.map((album) => {
-  //   return <Album key={album.id} album={album}
-  //   name={album.name} artist={album.artist} year={album.year} image={album.image}
-  //   />
-  // });
-
+function handleClickMore() {
+  setDataIndex((dataIndex) => (dataIndex + 2) % albums.length);
+}
+function handleClickLess() {
+  setDataIndex((dataIndex) => (dataIndex - 2) % albums.length);
+}
 
   return (
     <Wrapper>
+
+
+        <div className="next-container">
+          <button className="back-button" onClick={handleClickLess}><i class="gg-chevron-left"></i></button>
+        </div>
+        <div className="next-container">
+          <button className="next-button" onClick={handleClickMore}><i class="gg-chevron-right"></i></button>
+        </div>
+  
     
       <h1 className="hometagline">Select an album to review:</h1>
-      {albums?.length > 0 ? (albums.map((album) => (
+
+      <div className="albumlist">
+      {albums?.length > 0 ? ([...albums].slice(dataIndex, dataIndex + 2).map((album) => (
+
         <>
-         <Album key={album.id} album={album}/>
-          {/* <a href={`/albums/${album.id}`}>See Album Reviews</a> */}
+          <Album key={album.id} album={album}/>
           <Button className="seeReviewsButton" onClick={() => navigateToReviews(album.id)}>See Album Reviews</Button>
         </>
-        ))
-      ) : (
-        <>
-          <h2>Or, add a new album: render form here?</h2>
-        </>
-      )}
+      ))
+      ) : null}
+
+      </div>
+      <br></br>
 
       <form className="albumForm" onSubmit={handleAlbumSubmit}>
+      <h1 className="formtagline">Or, add an album:</h1>
 
-        <FormField>
-          <Label htmlFor="nameInput">Album Name:</Label>
-          <Input type="text" id="name" value={albumName} onChange={(e) => setAlbumName(e.target.value)}/>
-        </FormField>
+      <FormField>
+        <Label htmlFor="nameInput">Album Name:</Label>
+        <Input type="text" id="name" value={albumName} onChange={(e) => setAlbumName(e.target.value)}/>
+      </FormField>
 
-        <FormField>
-          <Label htmlFor="artistInput">Album Artist:</Label>
-          <Input type="text" id="artist" value={albumArtist} onChange={(e) => setAlbumArtist(e.target.value)}/>
-        </FormField>
+      <FormField>
+        <Label htmlFor="artistInput">Album Artist:</Label>
+        <Input type="text" id="artist" value={albumArtist} onChange={(e) => setAlbumArtist(e.target.value)}/>
+      </FormField>
 
-        <FormField>
-          <Label htmlFor="yearInput">Album Release Year:</Label>
-          <Input type="text" id="year" value={albumYear} onChange={(e) => setAlbumYear(e.target.value)}/>
-        </FormField>
+      <FormField>
+        <Label htmlFor="yearInput">Album Release Year:</Label>
+        <Input type="text" id="year" value={albumYear} onChange={(e) => setAlbumYear(e.target.value)}/>
+      </FormField>
 
-        <FormField>
-          <Label htmlFor="imageInput">Album Cover:</Label>
-          <Input type="url" id="image" value={albumImage} onChange={(e) => setAlbumImage(e.target.value)}/>
-        </FormField>
+      <FormField>
+        <Label htmlFor="imageInput">Album Cover:</Label>
+        <Input type="url" id="image" value={albumImage} onChange={(e) => setAlbumImage(e.target.value)}/>
+      </FormField>
 
-        <FormField>
-          <Button type="submit">Submit</Button>
-        </FormField>
+      <FormField>
+        <Button type="submit">Submit</Button>
+      </FormField>
 
       </form>
 
@@ -133,9 +127,5 @@ const Wrapper = styled.section`
   max-width: 800px;
   margin: 40px auto;
 `;
-
-// const Album = styled.article`
-//   margin-bottom: 24px;
-// `;
 
 export default AlbumsPage;
