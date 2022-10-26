@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
-import SignupError from "./styles/SignupError.js";
 import FormField from "./styles/FormField.js";
 import Button from "./styles/Button.js";
 import Input from "./styles/Input.js";
 import Label from "./styles/Label.js";
+import Error from "./styles/Error.js";
 
 function SignupPage( { onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [errors, setErrors] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
- //POST request for creating a new user
+
  function handleSubmit(e) {
   e.preventDefault();
+  setIsLoading(true);
   setErrors([]);
   fetch("/signup", {
     method: "POST",
@@ -26,6 +28,7 @@ function SignupPage( { onLogin }) {
       password_confirmation: passwordConfirmation
     }),
   }).then((r) => {
+    setIsLoading(false);
     if (r.ok) {
       r.json().then((user) => onLogin(user));
     } else {
@@ -54,12 +57,12 @@ function SignupPage( { onLogin }) {
       </FormField>
       
       <FormField>
-        <Button type="submit">Sign Up</Button>
+        <Button type="submit">{isLoading ? "Loading..." : "Sign Up"}</Button>
       </FormField>
 
       <FormField>
         {errors.map((err) => (
-          <SignupError key={err}>{err}</SignupError>
+          <Error key={err}>{err}</Error>
         ))}
       </FormField>
     </form>
