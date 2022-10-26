@@ -1,20 +1,15 @@
 import React from "react";
 
-function Album({album, showingYear} ) {
+function Album( {album} ) {
 
   return (
     <>
-      <ul className="albumdisplayitem">
+      <ul className="albumdisplayitems">
         <img src={album.image} className="albumimage" alt="Album Cover"/>
-        <div className="albumdisplay">{album.name} - {album.artist}</div>
+        <div className="albumdisplay">{album.name} - {album.artist} - {album.year}</div>
       </ul>
-
-      {showingYear ? 
-        <div>{album?.year}</div>
-        : null
-      }
-
     </>
   )
 }
+
 export default Album;

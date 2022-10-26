@@ -5,7 +5,6 @@ class ReviewsController < ApplicationController
       album = Album.find(params[:album_id])
       reviews = album.reviews
       render json: reviews
-      # , include: :album
     else
       render json: { errors: ["No reviews yet"] }
     end
@@ -17,24 +16,22 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    review = Review.create(review_params)
+    # review = Review.create!(review_params)
+    review = @current_user.reviews.create!(review_params)
     render json: review, status: :created
   end
 
   def update
-    review = find_review
+    # return render json: { error: "Not authorized" }, status: :unauthorized unless session.include? :user_id
+    review = Review.find_by(id: params[:id])
     review.update!(review_params)
+    # review = @current_user.reviews.update!(review_params)
     render json: review
   end
 
-  # def destroy 
-  #   review = find_review
-  #   review.destroy
-  #   head :no_content
-  # end
-
   def destroy
-    review = Review.find_by(id: params[:id])
+    # review = Review.find_by(id: params[:id])
+    review = find_review
     if review
       review.destroy
       head :no_content

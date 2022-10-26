@@ -10,14 +10,8 @@ class AlbumsController < ApplicationController
     render json: album, include: :reviews
   end
 
-  # def show
-  #   album = Album.find_by(id: params[:id])
-  #   render json: album
-  # end
-
-
   def create
-    album = Album.create(album_params)
+    album = Album.create!(album_params)
     render json: album, status: :created
   end
 

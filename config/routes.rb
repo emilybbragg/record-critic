@@ -4,8 +4,7 @@ Rails.application.routes.draw do
     resources :reviews, only: [:index, :show]
   end
 
-  resources :reviews, only: [:index, :create, :update, :destroy]
-  # resources :users, only:[:show, :create]
+  resources :reviews, only: [:update, :destroy, :create]
 
   post "/login", to: "sessions#create"
   get "/me", to: "users#show"
