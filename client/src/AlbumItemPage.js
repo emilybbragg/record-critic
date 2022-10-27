@@ -30,8 +30,6 @@ function AlbumItemPage({ user }) {
 
   }, [albumId]);
 
-
-
   return (
     <>
     <div className="album-container">
