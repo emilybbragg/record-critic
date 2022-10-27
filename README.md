@@ -8,8 +8,8 @@ To run the backend of this application, run the following commands in a terminal
 `rails s` (to run rails server)
 
 To run the frontend of this application, run the following commands in a separate terminal:
-`npm install` --prefix client (to install dependencies)
-`npm start` --prefix client (to start React server)
+`npm install --prefix client` (to install dependencies)
+`npm start --prefix client` (to start React server)
 
 ### Features and How to Use
 Users can login to their account by using their previously created username and password. If users to not have an account, they can create an account via the signup feature.
