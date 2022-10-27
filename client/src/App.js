@@ -6,40 +6,54 @@ import AlbumsPage from "./AlbumsPage";
 import NavBar from "./NavBar";
 import AlbumItemPage from "./AlbumItemPage";
 import MyReviewsPage from "./MyReviewsPage";
-// import ReviewList from "./ReviewList";
 
 function App() {
   const navigate = useNavigate()
   const [user, setUser] = useState(null);
+  const [isLoadingUser, setIsLoadingUser] = useState(true)
 
-  //For keeping user logged in
   useEffect(() => {
     fetch("/me").then((r) => {
       if (r.ok) {
-        r.json().then((user) => setUser(user));
+        r.json().then((user) => {
+          if (user) {
+            setUser(user)
+          } else {
+            setIsLoadingUser(false)
+          }
+        });
       }
     });
   }, []);
 
   useEffect(() => {
     if (user) {
-      navigate("/albums")
+      console.log("USER")
+      console.log(user)
+      setIsLoadingUser(false)
     }
   }, [user])
 
-  if (!user) return <LoginPage onLogin={setUser} />
+
+
+  if (!user && !isLoadingUser) return <LoginPage user={user} onLogin={setUser} />
 
   return (
     <div>
-      <NavBar user={user} setUser={setUser}/>
+     {isLoadingUser ?
+      <div>Loading user data...</div>
+      : 
+      <>
+        <NavBar user={user} setUser={setUser}/>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<LoginPage user={user} onLogin={setUser} />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/albums" element={user ? <AlbumsPage /> : <Navigate to="/" />} />
+          <Route path="/albums" element={<AlbumsPage />} />
           <Route path="/albums/:albumId" element={<AlbumItemPage user={user}/>} />
           {/* <Route path="/albums/:albumId" element={user ? <AlbumItemPage user={user}/> : <Navigate to="/" />} /> */}
           <Route path="/myreviews" element={<MyReviewsPage user={user}/>} />
         </Routes>
+      </>}
     </div>
   );
 }
