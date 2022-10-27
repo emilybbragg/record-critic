@@ -6,7 +6,7 @@ import styled from "styled-components";
 import Button from "./styles/Button.js";
 import Review from "./Review";
 
-function ReviewList( {user, albumId, reviews, setReviews, onUpdateReview}) {
+function ReviewList( {user, albumId, reviews, setReviews} ) {
 
   const [reviewTitle, setReviewTitle] = useState("");
   const [reviewDescription, setReviewDescription] = useState("");
@@ -70,7 +70,7 @@ function ReviewList( {user, albumId, reviews, setReviews, onUpdateReview}) {
       <Wrapper>
       <div className="review-container">
         {reviews?.length > 0 ? (reviews.map((review) => (
-          <Review key={review.id} id={review.id} review={review} handleReviewDeleteClick={handleReviewDeleteClick}  handleUpdateReview={handleUpdateReview}/>
+          <Review key={review.id} id={review.id} review={review} handleReviewDeleteClick={handleReviewDeleteClick} handleUpdateReview={handleUpdateReview} user={user}/>
           ))
         ) : null}
       
