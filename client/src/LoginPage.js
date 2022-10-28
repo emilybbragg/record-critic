@@ -10,22 +10,19 @@ function LoginPage({ onLogin, user }) {
   const [showLogin, setShowLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(true)
 
-
-  console.log("USER FROM LOGIN PAGE")
-  console.log(user)
-
   useEffect(() => {
     if (user) {
       navigate("/albums")
-    } else {
+    } 
+    else {
       setIsLoading(false)
     }
   }, [user])
   
-
   return (
     <>
     {isLoading ? <div>Loading our user....</div> :
+
     <Wrapper>
       <div className="login-form">
         <h1 className="title">Record Critic</h1>
@@ -51,7 +48,8 @@ function LoginPage({ onLogin, user }) {
           </>
         )}
       </div>
-    </Wrapper>}
+    </Wrapper>
+    } 
     </>
   );
 }
