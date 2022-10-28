@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import EditReview from "./EditReview";
 
-function Review ( {handleReviewDeleteClick, review, handleUpdateReview, user, reviews, setReviews} ) {
+function Review ( {handleReviewDeleteClick, review, handleUpdateReview, user} ) {
 
   const [isEditing, setIsEditing] = useState(false);
 
