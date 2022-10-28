@@ -6,6 +6,7 @@ import Input from "./styles/Input.js";
 import Label from "./styles/Label.js";
 import Button from "./styles/Button.js";
 import Album from "./Album";
+import FormError from "./styles/FormError.js";
 
 
 function AlbumsPage() {
@@ -15,6 +16,8 @@ function AlbumsPage() {
   const [albumYear, setAlbumYear] = useState([]);
   const [albumImage, setAlbumImage] = useState([]);
   const [isLoadingAlbums, setIsLoadingAlbums] = useState(true);
+  const [errors, setErrors] = useState([]);
+
 
   const [dataIndex, setDataIndex] = useState(0)
   const navigate = useNavigate();
@@ -22,8 +25,6 @@ function AlbumsPage() {
   const navigateToReviews = (albumId) => {
     navigate(`/albums/${albumId}`);
   };
-
-
 
   function handleClickMore() {
     setDataIndex((dataIndex) => (dataIndex + 2) % albums.length);
@@ -53,6 +54,7 @@ function AlbumsPage() {
 
   function handleAlbumSubmit(e) {
     e.preventDefault();
+    setErrors([]);
     const albumData = {
       name: albumName,
       artist: albumArtist,
@@ -66,8 +68,9 @@ function AlbumsPage() {
       },
         body: JSON.stringify(albumData),
     })
-      .then((r) => r.json())
-      .then((newAlbum) => {
+    .then((r) => {
+    if (r.ok) {
+      r.json().then((newAlbum) => {
         const allAlbumsWithNew = [...albums, newAlbum]
         setAlbums(allAlbumsWithNew);
         setAlbumName("");
@@ -75,7 +78,24 @@ function AlbumsPage() {
         setAlbumYear("");
         setAlbumImage("");
       })
+    } else {
+      r.json().then((err) => {
+        setErrors([err.error]);
+      })
+      }
+    })
   }
+
+  //     .then((r) => r.json())
+  //     .then((newAlbum) => {
+  //       const allAlbumsWithNew = [...albums, newAlbum]
+  //       setAlbums(allAlbumsWithNew);
+  //       setAlbumName("");
+  //       setAlbumArtist("");
+  //       setAlbumYear("");
+  //       setAlbumImage("");
+  //     })
+  // }
 
   return (
     <Wrapper>
@@ -123,6 +143,12 @@ function AlbumsPage() {
 
         <FormField>
           <Button type="submit">Submit</Button>
+        </FormField>
+
+        <FormField>
+          {errors.map((err) => (
+            <FormError key={err}>{err}</FormError>
+          ))}
         </FormField>
       </form>
     </>
