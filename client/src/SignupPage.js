@@ -3,7 +3,7 @@ import FormField from "./styles/FormField.js";
 import Button from "./styles/Button.js";
 import Input from "./styles/Input.js";
 import Label from "./styles/Label.js";
-import Error from "./styles/Error.js";
+import PasswordError from "./styles/PasswordError.js";
 
 function SignupPage( { onLogin }) {
   const [username, setUsername] = useState("");
@@ -62,7 +62,7 @@ function SignupPage( { onLogin }) {
 
       <FormField>
         {errors.map((err) => (
-          <Error key={err}>{err}</Error>
+          <PasswordError key={err}>{err}</PasswordError>
         ))}
       </FormField>
     </form>
