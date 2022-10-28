@@ -5,12 +5,16 @@ import Label from "./styles/Label.js";
 import styled from "styled-components";
 import Button from "./styles/Button.js";
 import Review from "./Review";
+import FormError from "./styles/FormError.js";
+
 
 function ReviewList( {user, albumId, reviews, setReviews} ) {
 
   const [reviewTitle, setReviewTitle] = useState("");
   const [reviewDescription, setReviewDescription] = useState("");
   const [reviewRating, setReviewRating] = useState("");
+  const [errors, setErrors] = useState([]);
+
 
   function handleReviewSubmit(e) {
     e.preventDefault();
@@ -28,15 +32,36 @@ function ReviewList( {user, albumId, reviews, setReviews} ) {
       },
         body: JSON.stringify(reviewData),
     })
-      .then((r) => r.json())
-      .then((newReview) => {
-        const allReviewsWithNew = [...reviews, newReview]
-        setReviews(allReviewsWithNew);
-        setReviewTitle("");
-        setReviewDescription("");
-        setReviewRating("");
-      })
+    .then((r) => {
+      if (r.ok) {
+        r.json().then((newReview) => {
+          const allReviewsWithNew = [...reviews, newReview]
+          setReviews(allReviewsWithNew);
+          setReviewTitle("");
+          setReviewDescription("");
+          setReviewRating("");
+        })
+      } else {
+        r.json().then((err) => {
+          setErrors([err.error]);
+        })
+      }
+    })
   }
+
+
+
+  //     .then((r) => r.json())
+  //     .then((newReview) => {
+  //       const allReviewsWithNew = [...reviews, newReview]
+  //       setReviews(allReviewsWithNew);
+  //       setReviewTitle("");
+  //       setReviewDescription("");
+  //       setReviewRating("");
+  //     })
+  // }
+
+
 
   function handleReviewDeleteClick(review) {
     fetch(`/reviews/${review.id}`, {
@@ -95,6 +120,13 @@ function ReviewList( {user, albumId, reviews, setReviews} ) {
             <FormField>
               <Button type="submit">Submit</Button>
             </FormField>
+
+            <FormField>
+              {errors.map((err) => (
+                <FormError key={err}>{err}</FormError>
+              ))}
+            </FormField>
+            
           </form>
         </div>
       </Wrapper>
