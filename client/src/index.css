@@ -334,3 +334,10 @@ border-radius: 10px;
   text-align: center;
   text-shadow: 1px 1px #03045e;
 }
+
+.my-reviews-heading {
+  font-family: didot;
+  text-align: center;
+  color: white;
+  font-size: 35px;
+}
