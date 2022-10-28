@@ -1,44 +1,46 @@
 import React, {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
-import Review from "./Review";
+// import Review from "./Review";
+// import ReviewList from "./ReviewList";
 
 function MyReviewsPage( {reviews, review, setReviews, user} ) {
 
-  const [userReviews, setUserReviews] = useState([]);
-
-  function displayUserReviews(user) {
-    const userReviews = reviews.filter((review) => review.id !== user.id)
-    setReviews(userReviews)
-  }
-
-
-  const {userId} = useParams();
-
-  useEffect(() => {
-    console.log(userReviews)
-    fetch("/user/${userId}/reviews")
-      .then((r) => r.json())
-      .then(userReviews => setUserReviews(userReviews))
-  }, [userId])
 
 
 
-  //render all the albums and their corresponding reviews that the logged in user has left
+  // const [userReviews, setUserReviews] = useState([]);
+  // const {userId} = useParams();
+
+  // useEffect(() => {
+  //   fetch(`/reviews/${userId}`)
+  //     .then((r) => r.json())
+  //     .then((u) => {
+  //       setUserReviews(u)
+  //     });
+  //   }, [userId])
+
 
   return (
-    <div>
-    <ul>
-      {/* <Review
-      userId={userId}
-      userReviews={userReviews}
-      displayUserReviews = {displayUserReviews}
-      /> */}
-    {/* {displayUserReviews} */}
-    
-    </ul>
-      
-    </div>
-  )
+<>
+ 
+
+{/* {review.user_id == user.id ? (
+<ul>
+        <span className="review-title">{review?.title}</span>
+        Rating: {review?.rating}/5
+        <br></br>
+        {review?.description}
+        <p> - {review?.user?.username}</p>
+
+</ul>
+
+) : null} */}
+<div className="my-reviews-heading">{user.username}'s Reviews:</div>
+
+</>
+    )
+  
 }
+
 
 export default MyReviewsPage;
