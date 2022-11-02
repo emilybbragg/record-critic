@@ -2,11 +2,11 @@ class AlbumsController < ApplicationController
 
   def index
     albums = Album.all
-    render json: albums, include: :reviews
+    render json: albums
   end
 
   def show
-    album = find_album
+    album = Album.find(params[:id])
     render json: album, include: :reviews
   end
 
@@ -16,10 +16,6 @@ class AlbumsController < ApplicationController
   end
 
   private
-
-  def find_album
-    Album.find(params[:id])
-  end
 
   def album_params
     params.permit(:name, :artist, :year, :image)
