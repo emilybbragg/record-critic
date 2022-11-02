@@ -5,24 +5,13 @@ class ReviewsController < ApplicationController
       album = Album.find(params[:album_id])
       reviews = album.reviews
       render json: reviews
+    elsif params[:user_id]
+      user = User.find(params[:user_id])
+      reviews = user.reviews
+      render json: reviews
     else
       render json: { errors: ["No reviews yet"] }
     end
-  end
-
-  # def index
-  #   if params[:user_id]
-  #     user = User.find_by(params[:user_id])
-  #     reviews = user.reviews
-  #     render json: reviews
-  #   else
-  #     render json: { errors: ["No reviews yet"] }
-  #   end
-  # end
-
-  def show
-    review = Review.find(params[:id])
-    render json: review
   end
 
   def create
@@ -31,20 +20,15 @@ class ReviewsController < ApplicationController
   end
 
   def update
-    review = Review.find_by(id: params[:id])
+    review = find_review
     review.update!(review_params)
-    # review = @current_user.reviews.update!(review_params)
     render json: review
   end
 
   def destroy
     review = find_review
-    if review
-      review.destroy
-      head :no_content
-    else
-      render json: { error: "Review not found" }, status: :not_found
-    end
+    review.destroy
+    head :no_content
   end
 
   private
