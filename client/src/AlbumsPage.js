@@ -85,18 +85,7 @@ function AlbumsPage() {
       }
     })
   }
-
-  //     .then((r) => r.json())
-  //     .then((newAlbum) => {
-  //       const allAlbumsWithNew = [...albums, newAlbum]
-  //       setAlbums(allAlbumsWithNew);
-  //       setAlbumName("");
-  //       setAlbumArtist("");
-  //       setAlbumYear("");
-  //       setAlbumImage("");
-  //     })
-  // }
-
+  
   return (
     <Wrapper>
 

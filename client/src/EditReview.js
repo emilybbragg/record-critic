@@ -1,31 +1,30 @@
 import React, { useState } from 'react';
 
-  function EditReview({ review, setIsEditing, handleUpdateReview }) {
+function EditReview({ review, setIsEditing, handleUpdateReview }) {
 
-    const { description } = review
-    
-    const [updatedDescription, setUpdatedDescription] = useState(description)
+  const { description } = review
+  const [updatedDescription, setUpdatedDescription] = useState(description)
 
-    function handleDescriptionChange(e){
-        setUpdatedDescription(e.target.value)
-    }
+  function handleDescriptionChange(e){
+      setUpdatedDescription(e.target.value)
+  }
 
-    function handleSubmit(e) {
-      e.preventDefault();
-  
-      fetch(`/reviews/${review.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          description: updatedDescription
-        }),
-      })
-        .then((r) => r.json())
-        .then((updatedDescription) => handleUpdateReview(updatedDescription))
-        .then(() => setIsEditing(false));
-    }
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    fetch(`/reviews/${review.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        description: updatedDescription
+      }),
+    })
+      .then((r) => r.json())
+      .then((updatedDescription) => handleUpdateReview(updatedDescription))
+      .then(() => setIsEditing(false));
+  }
 
   return (
     <form className="edit-comment" onSubmit={handleSubmit}>

@@ -9,7 +9,6 @@ function AlbumItemPage({ user }) {
   const {albumId} = useParams();
   const [reviews, setReviews] = useState([]);
 
-
   const handleGetReviews = () => {
     fetch(`/albums/${albumId}/reviews`)
     .then((r) => r.json())
@@ -17,32 +16,28 @@ function AlbumItemPage({ user }) {
       setReviews(reviews)
     })
   }
-
+  
   useEffect(() => {
-
     fetch(`/albums/${albumId}`)
       .then((r) => r.json())
       .then((a) => {
         setCurrentAlbum(a)
-        console.log(a)
       });
       handleGetReviews();
-
-  }, [albumId]);
+    }, [albumId])
 
   return (
     <>
-    <div className="album-container">
-      <Album album={currentAlbum} showingYear />
-      </div>
-      <ReviewList 
-        user={user} 
-        albumId={albumId} 
-        reviews={reviews}
-        setReviews={setReviews}
-      />
+        <div className="album-container">
+          <Album album={currentAlbum} />
+        </div>
+        <ReviewList 
+          user={user} 
+          albumId={albumId} 
+          reviews={reviews}
+          setReviews={setReviews}
+        />
     </>
-
   );
 }
 

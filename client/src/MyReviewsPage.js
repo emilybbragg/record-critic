@@ -1,45 +1,75 @@
-import React, {useState, useEffect} from "react";
-import { useParams } from "react-router-dom";
-// import Review from "./Review";
-// import ReviewList from "./ReviewList";
+import React from "react";
+import Review from "./Review";
 
-function MyReviewsPage( {reviews, review, setReviews, user} ) {
+function MyReviewsPage({ user, userReviews, setUserReviews }) {
 
+  function handleReviewDeleteClick(review) {
+    fetch(`/reviews/${review.id}`, {
+        method: "DELETE",
+    })
+    .then((r) => {
+      if (r.ok) {
+        deleteReview(review)
+      }
+    })
+  }
+  
+  function deleteReview(deletedReview) {
+    const updatedReviews = userReviews.filter((review) => review.id !== deletedReview.id)
+    setUserReviews(updatedReviews)
+  }
 
+  function handleUpdateReview(updatedReview) {
+    const editedReviews = userReviews.map((review) => {
+      if (review.id === updatedReview.id) {
+        return updatedReview;
+      } else {
+        return review;
+      }
+    });
+    setUserReviews(editedReviews);
+  }
 
-
-  // const [userReviews, setUserReviews] = useState([]);
-  // const {userId} = useParams();
-
-  // useEffect(() => {
-  //   fetch(`/reviews/${userId}`)
-  //     .then((r) => r.json())
-  //     .then((u) => {
-  //       setUserReviews(u)
-  //     });
-  //   }, [userId])
-
+  console.log(userReviews)
 
   return (
-<>
- 
+    <>
+      <div className="my-reviews-heading">{user.username}'s Reviews:</div>
+      <ul className="my-reviews-list">
+      {userReviews?.length > 0 ? (userReviews.map((review) => (
+        <>
+        <div className="album-review-container">
+            <div className="album-column">
+              <div className="album-review-display">{review?.album?.name}
+                <br></br>
+                {review?.album?.artist}
+                <br></br>
+                {review?.album?.year}
+              </div>
+              
+              <img className="album-image" src={review?.album?.image}/>
+              <div className="album-review-details-container">
+                <Review 
+                  key={review.id} 
+                  id={review.id} 
+                  review={review} 
+                  handleReviewDeleteClick={handleReviewDeleteClick} 
+                  handleUpdateReview={handleUpdateReview} 
+                  user={user}
+                  backgroundWhite
+                />
+              </div>
+            </div>
+          </div>
+        </>
+          ))
+        ) : 
+        <div className="no-reviews">No reviews yet!</div>
+        }
+      </ul>
 
-{/* {review.user_id == user.id ? (
-<ul>
-        <span className="review-title">{review?.title}</span>
-        Rating: {review?.rating}/5
-        <br></br>
-        {review?.description}
-        <p> - {review?.user?.username}</p>
-
-</ul>
-
-) : null} */}
-<div className="my-reviews-heading">{user.username}'s Reviews:</div>
-
-</>
-    )
-  
+    </>
+  )
 }
 
 

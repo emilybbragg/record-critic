@@ -1,19 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import EditReview from "./EditReview";
 
-function Review ( {handleReviewDeleteClick, review, handleUpdateReview, user} ) {
+function Review ({ handleReviewDeleteClick, review, handleUpdateReview, user, backgroundWhite }) {
 
   const [isEditing, setIsEditing] = useState(false);
+
+  console.log(user.username)
 
   return (
     <>
     <div className="review-container">
-      <ul className="reviewsList">
+      <ul className={backgroundWhite ? "reviewsListWhite" : "reviewsList"}>
         <span className="review-title">{review?.title}</span>
         Rating: {review?.rating}/5
         <br></br>
         {review?.description}
-        <p> - {review?.user?.username}</p>
+        <br></br>
+        <p className="review-username">{review?.user?.username}</p>
       
        {isEditing && review.user_id == user.id ? (
         <EditReview
