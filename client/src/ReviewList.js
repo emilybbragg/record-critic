@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import FormField from "./styles/FormField.js";
 import Input from "./styles/Input.js";
 import Label from "./styles/Label.js";
@@ -8,7 +8,7 @@ import Review from "./Review";
 import FormError from "./styles/FormError.js";
 
 
-function ReviewList( {user, albumId, reviews, setReviews} ) {
+function ReviewList( {user, albumId, reviews, setReviews, handleReviewDeleteClick, handleUpdateReview} ) {
 
   const [reviewTitle, setReviewTitle] = useState("");
   const [reviewDescription, setReviewDescription] = useState("");
@@ -49,20 +49,6 @@ function ReviewList( {user, albumId, reviews, setReviews} ) {
     })
   }
 
-
-
-  //     .then((r) => r.json())
-  //     .then((newReview) => {
-  //       const allReviewsWithNew = [...reviews, newReview]
-  //       setReviews(allReviewsWithNew);
-  //       setReviewTitle("");
-  //       setReviewDescription("");
-  //       setReviewRating("");
-  //     })
-  // }
-
-
-
   function handleReviewDeleteClick(review) {
     fetch(`/reviews/${review.id}`, {
         method: "DELETE",
@@ -95,7 +81,14 @@ function ReviewList( {user, albumId, reviews, setReviews} ) {
       <Wrapper>
       <div className="review-container">
         {reviews?.length > 0 ? (reviews.map((review) => (
-          <Review key={review.id} id={review.id} review={review} handleReviewDeleteClick={handleReviewDeleteClick} handleUpdateReview={handleUpdateReview} user={user}/>
+          <Review 
+            key={review.id} 
+            id={review.id} 
+            review={review} 
+            handleReviewDeleteClick={handleReviewDeleteClick} 
+            handleUpdateReview={handleUpdateReview} 
+            user={user}
+          />
           ))
         ) : null}
       
@@ -140,9 +133,3 @@ const Wrapper = styled.section`
 `;
 
 export default ReviewList;
-
-
-//other way of mapping reviews - probably not necessary
-  // const allReviews = reviews.map((review) => {
-  //   return <Review key={review.id} review={review} title={review.title} description={review.description} rating={review.rating} handleReviewDeleteClick={handleReviewDeleteClick} />
-  // });
