@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   
   resources :albums, only: [:index, :show, :create] do
-    resources :reviews, only: [:index, :show]
+    resources :reviews, only: [:index]
+  end
+
+  resources :users, only: [:show] do
+    resources :reviews, only: [:index]
   end
 
   resources :reviews, only: [:update, :destroy, :create, :index]
@@ -10,6 +14,8 @@ Rails.application.routes.draw do
   get "/me", to: "users#show"
   delete "/logout", to: "sessions#destroy"
   post "/signup", to: "users#create"
+
+  # get '/users/:id', to: 'users#show'
 
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!
