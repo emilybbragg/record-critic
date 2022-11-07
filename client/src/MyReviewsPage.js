@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Review from "./Review";
 
 function MyReviewsPage({ user, userReviews, setUserReviews }) {
@@ -13,6 +13,16 @@ function MyReviewsPage({ user, userReviews, setUserReviews }) {
       }
     })
   }
+
+  useEffect(() => {
+    if (user) {
+      fetch (`/users/${user.id}/reviews`)
+        .then((r) => r.json())
+        .then((userReviews) => {
+          setUserReviews(userReviews)
+        })
+    }
+  }, [user])
   
   function deleteReview(deletedReview) {
     const updatedReviews = userReviews.filter((review) => review.id !== deletedReview.id)
@@ -29,8 +39,6 @@ function MyReviewsPage({ user, userReviews, setUserReviews }) {
     });
     setUserReviews(editedReviews);
   }
-
-  console.log(userReviews)
 
   return (
     <>

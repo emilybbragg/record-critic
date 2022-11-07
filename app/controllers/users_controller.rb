@@ -9,12 +9,7 @@ class UsersController < ApplicationController
 
   def show
     user = User.find_by(id: session[:user_id])
-    if user
-      reviews = user.reviews
-      render json: user, include: :reviews
-    else
-      render json: { error: "Not authorized" }, status: :unauthorized
-    end
+    render json: user
   end
 
   private
@@ -24,3 +19,20 @@ class UsersController < ApplicationController
   end
 
 end
+
+
+
+
+
+
+
+
+  # def show
+  #   user = User.find_by(id: session[:user_id])
+  #   if user
+  #     reviews = user.reviews
+  #     render json: user, include: :reviews
+  #   else
+  #     render json: { error: "Not authorized" }, status: :unauthorized
+  #   end
+  # end

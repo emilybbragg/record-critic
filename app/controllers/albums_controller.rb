@@ -7,7 +7,7 @@ class AlbumsController < ApplicationController
 
   def show
     album = Album.find(params[:id])
-    render json: album, include: :reviews
+    render json: album
   end
 
   def create

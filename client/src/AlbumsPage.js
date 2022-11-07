@@ -8,7 +8,6 @@ import Button from "./styles/Button.js";
 import Album from "./Album";
 import FormError from "./styles/FormError.js";
 
-
 function AlbumsPage() {
   const [albums, setAlbums] = useState([]);
   const [albumName, setAlbumName] = useState([]);
@@ -17,7 +16,6 @@ function AlbumsPage() {
   const [albumImage, setAlbumImage] = useState([]);
   const [isLoadingAlbums, setIsLoadingAlbums] = useState(true);
   const [errors, setErrors] = useState([]);
-
 
   const [dataIndex, setDataIndex] = useState(0)
   const navigate = useNavigate();
@@ -88,6 +86,7 @@ function AlbumsPage() {
   
   return (
     <Wrapper>
+      <Search searchedAlbums={searchedAlbums} setSearchedAlbums={setSearchedAlbums}/>
 
    { isLoadingAlbums ? <div>Loading Albums...</div> : 
    <>
@@ -96,8 +95,17 @@ function AlbumsPage() {
 
       <h1 className="hometagline">Select an album to review:</h1>
       <div className="albumlist">
-        {albums?.length > 0 ? ([...albums].slice(dataIndex, dataIndex + 2).map((album) => (
-
+        { 
+        searchedAlbums?.length > 0 ? ([...searchedAlbums].slice(dataIndex, dataIndex + 2).map((album) => (
+          <>
+            <Album key={album.id} album={album}/>
+            <Button className="seeReviewsButton" onClick={() => navigateToReviews(album.id)}>See Album Reviews</Button>
+          </>
+        ))
+        )
+        
+        
+        : albums?.length > 0 ? ([...albums].slice(dataIndex, dataIndex + 2).map((album) => (
           <>
             <Album key={album.id} album={album}/>
             <Button className="seeReviewsButton" onClick={() => navigateToReviews(album.id)}>See Album Reviews</Button>

@@ -9,14 +9,12 @@ class ReviewsController < ApplicationController
       user = User.find(params[:user_id])
       reviews = user.reviews
       render json: reviews
-    else
-      render json: { errors: ["No reviews yet"] }
     end
   end
 
   def create
     review = @current_user.reviews.create!(review_params)
-    render json: review, status: :created
+    render json: review
   end
 
   def update
