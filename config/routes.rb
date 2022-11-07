@@ -8,6 +8,9 @@ Rails.application.routes.draw do
     resources :reviews, only: [:index]
   end
 
+
+  get "/users/:user_id/albums", to: 'albums#reviewed_albums'
+
   resources :reviews, only: [:update, :destroy, :create, :index]
 
   post "/login", to: "sessions#create"
