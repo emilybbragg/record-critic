@@ -26,6 +26,7 @@ function NavBar({ user, setUser }) {
           <div className="links">
             <Link to="/albums" className="nav"> Albums </Link>
             <Link to="/myreviews" className="nav"> My Reviews </Link>
+            <Link to="/myalbums" className="nav"> My Reviewed Albums </Link>
             <button onClick={handleLogoutClick} className="logout">Logout</button>
           </div>
       </div>
