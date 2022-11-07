@@ -6,12 +6,14 @@ import AlbumsPage from "./AlbumsPage";
 import NavBar from "./NavBar";
 import AlbumItemPage from "./AlbumItemPage";
 import MyReviewsPage from "./MyReviewsPage";
+import MyAlbumsPage from "./MyAlbumsPage";
 
 function App() {
   const navigate = useNavigate()
   const [user, setUser] = useState(null);
-  const [isLoadingUser, setIsLoadingUser] = useState(true)
-  const [userReviews, setUserReviews] = useState([])
+  const [isLoadingUser, setIsLoadingUser] = useState(true);
+  const [userReviews, setUserReviews] = useState([]);
+
 
   useEffect(() => {
     fetch("/me").then((r) => {
@@ -56,6 +58,9 @@ function App() {
           <Route path="/albums" element={<AlbumsPage />} />
           <Route path="/albums/:albumId" element={<AlbumItemPage user={user} />} />
           <Route path="/myreviews" element={<MyReviewsPage user={user} userReviews={userReviews} setUserReviews={setUserReviews} />} />
+          <Route path="/myalbums" element={<MyAlbumsPage user={user}
+          // userAlbums={userAlbums} setUserReviews={setUserAlbums}
+          />} />
         </Routes>
       </>}
     </div>
