@@ -385,6 +385,15 @@ border-radius: 10px;
   gap: 2rem;
 }
 
+.my-albums-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 .album-review-container {
   display: flex;
   align-items: center;
