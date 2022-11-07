@@ -35,7 +35,7 @@ function AlbumsPage() {
     fetch("/albums")
       .then((r) => r.json())
       .then(albums => {
-        if (albums) {
+        if (albums && albums.length > 0) {
           setAlbums(albums)
         }
         else {
@@ -90,21 +90,23 @@ function AlbumsPage() {
    <>
     <button className="back-button" onClick={handleClickLess}><i class="gg-chevron-left"></i></button>
       <button className="next-button" onClick={handleClickMore}><i class="gg-chevron-right"></i></button>
-
-      <h1 className="hometagline">Select an album to review:</h1>
-      <div className="albumlist">
-        { albums?.length > 0 ? ([...albums].slice(dataIndex, dataIndex + 2).map((album) => (
+        { albums?.length > 0 ? (
           <>
-            <Album key={album.id} album={album}/>
-            <Button className="seeReviewsButton" onClick={() => navigateToReviews(album.id)}>See Album Reviews</Button>
+            <h1 className="hometagline">Select an album to review:</h1>
+            <div className="albumlist">
+              {[...albums].slice(dataIndex, dataIndex + 2).map((album) => (
+                <>
+                  <Album key={album.id} album={album}/>
+                  <Button className="seeReviewsButton" onClick={() => navigateToReviews(album.id)}>See Album Reviews</Button>
+                </>
+              ))}
+            </div>
           </>
-        ))
         ) : null}
-      </div>
       <br></br>
 
       <form className="albumForm" onSubmit={handleAlbumSubmit}>
-        <h1 className="formtagline">Or, add an album:</h1>
+        <h1 className="formtagline">Add a new album:</h1>
 
         <FormField>
           <Label htmlFor="nameInput">Album Name:</Label>
