@@ -86,8 +86,6 @@ function AlbumsPage() {
   
   return (
     <Wrapper>
-      <Search searchedAlbums={searchedAlbums} setSearchedAlbums={setSearchedAlbums}/>
-
    { isLoadingAlbums ? <div>Loading Albums...</div> : 
    <>
     <button className="back-button" onClick={handleClickLess}><i class="gg-chevron-left"></i></button>
@@ -95,17 +93,7 @@ function AlbumsPage() {
 
       <h1 className="hometagline">Select an album to review:</h1>
       <div className="albumlist">
-        { 
-        searchedAlbums?.length > 0 ? ([...searchedAlbums].slice(dataIndex, dataIndex + 2).map((album) => (
-          <>
-            <Album key={album.id} album={album}/>
-            <Button className="seeReviewsButton" onClick={() => navigateToReviews(album.id)}>See Album Reviews</Button>
-          </>
-        ))
-        )
-        
-        
-        : albums?.length > 0 ? ([...albums].slice(dataIndex, dataIndex + 2).map((album) => (
+        { albums?.length > 0 ? ([...albums].slice(dataIndex, dataIndex + 2).map((album) => (
           <>
             <Album key={album.id} album={album}/>
             <Button className="seeReviewsButton" onClick={() => navigateToReviews(album.id)}>See Album Reviews</Button>
