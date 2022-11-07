@@ -5,6 +5,12 @@ class AlbumsController < ApplicationController
     render json: albums
   end
 
+  def reviewed_albums
+    user = User.find_by(id: session[:user_id])
+    albums = user.albums
+    render json: albums
+  end
+
   def show
     album = Album.find(params[:id])
     render json: album
