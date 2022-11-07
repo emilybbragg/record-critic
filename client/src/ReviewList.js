@@ -7,14 +7,12 @@ import Button from "./styles/Button.js";
 import Review from "./Review";
 import FormError from "./styles/FormError.js";
 
-
 function ReviewList( {user, albumId, reviews, setReviews, handleReviewDeleteClick, handleUpdateReview} ) {
 
   const [reviewTitle, setReviewTitle] = useState("");
   const [reviewDescription, setReviewDescription] = useState("");
   const [reviewRating, setReviewRating] = useState("");
   const [errors, setErrors] = useState([]);
-
 
   function handleReviewSubmit(e) {
     e.preventDefault();
