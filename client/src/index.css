@@ -426,3 +426,15 @@ border-radius: 10px;
   font-size: 25px;
   margin-left: 50px;
 }
+
+.error-list {
+  color: red;
+  list-style-type: none;
+  padding-left: 0;
+  font-family: didot;
+  font-size: 25px;
+  background-color: white;
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+}
