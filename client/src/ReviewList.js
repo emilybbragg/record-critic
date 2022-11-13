@@ -5,7 +5,6 @@ import Label from "./styles/Label.js";
 import styled from "styled-components";
 import Button from "./styles/Button.js";
 import Review from "./Review";
-import FormError from "./styles/FormError.js";
 
 function ReviewList( {user, albumId, reviews, setReviews, handleReviewDeleteClick, handleUpdateReview} ) {
 
@@ -40,9 +39,7 @@ function ReviewList( {user, albumId, reviews, setReviews, handleReviewDeleteClic
           setReviewRating("");
         })
       } else {
-        r.json().then((err) => {
-          setErrors([err.error]);
-        })
+        r.json().then((err) => setErrors(err.errors))
       }
     })
   }
@@ -113,11 +110,12 @@ function ReviewList( {user, albumId, reviews, setReviews, handleReviewDeleteClic
             </FormField>
 
             <FormField>
-              {errors.map((err) => (
-                <FormError key={err}>{err}</FormError>
-              ))}
+              <div>
+                {errors.map((err) => (
+                  <ul key={err} className="error-list">Error: {err}</ul>
+                ))}
+              </div>
             </FormField>
-            
           </form>
         </div>
       </Wrapper>

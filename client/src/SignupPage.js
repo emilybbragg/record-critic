@@ -3,7 +3,6 @@ import FormField from "./styles/FormField.js";
 import Button from "./styles/Button.js";
 import Input from "./styles/Input.js";
 import Label from "./styles/Label.js";
-import PasswordError from "./styles/PasswordError.js";
 
 function SignupPage( { onLogin }) {
   const [username, setUsername] = useState("");
@@ -30,11 +29,14 @@ function SignupPage( { onLogin }) {
     setIsLoading(false);
     if (r.ok) {
       r.json().then((user) => onLogin(user));
-    } else {
-      r.json().then((err) => {
-        setErrors([err.error]);
-      })
-    }
+    // } else {
+    //   r.json().then((err) => {
+    //     setErrors([err.error]);
+    //   })
+  } else {
+    r.json().then((err) => setErrors(err.errors))
+  }
+    
   });
 }
 
@@ -60,9 +62,11 @@ function SignupPage( { onLogin }) {
       </FormField>
 
       <FormField>
-        {errors.map((err) => (
-          <PasswordError key={err}>{err}</PasswordError>
-        ))}
+        <div>
+          {errors.map((err) => (
+            <ul key={err} className="error-list">Error: {err}</ul>
+          ))}
+        </div>
       </FormField>
     </form>
     

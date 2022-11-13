@@ -6,7 +6,6 @@ import Input from "./styles/Input.js";
 import Label from "./styles/Label.js";
 import Button from "./styles/Button.js";
 import Album from "./Album";
-import FormError from "./styles/FormError.js";
 
 function AlbumsPage() {
   const [albums, setAlbums] = useState([]);
@@ -67,19 +66,17 @@ function AlbumsPage() {
         body: JSON.stringify(albumData),
     })
     .then((r) => {
-    if (r.ok) {
-      r.json().then((newAlbum) => {
-        const allAlbumsWithNew = [...albums, newAlbum]
-        setAlbums(allAlbumsWithNew);
-        setAlbumName("");
-        setAlbumArtist("");
-        setAlbumYear("");
-        setAlbumImage("");
-      })
-    } else {
-      r.json().then((err) => {
-        setErrors([err.error]);
-      })
+      if (r.ok) {
+        r.json().then((newAlbum) => {
+          const allAlbumsWithNew = [...albums, newAlbum]
+          setAlbums(allAlbumsWithNew);
+          setAlbumName("");
+          setAlbumArtist("");
+          setAlbumYear("");
+          setAlbumImage("");
+        })
+      } else {
+        r.json().then((err) => setErrors(err.errors))
       }
     })
   }
@@ -133,9 +130,11 @@ function AlbumsPage() {
         </FormField>
 
         <FormField>
-          {errors.map((err) => (
-            <FormError key={err}>{err}</FormError>
-          ))}
+          <div>
+            {errors.map((err) => (
+              <ul key={err} className="error-list">Error: {err}</ul>
+            ))}
+          </div>
         </FormField>
       </form>
     </>

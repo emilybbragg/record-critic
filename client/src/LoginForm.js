@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Error from "./styles/Error.js"
 import FormField from "./styles/FormField.js"
 import Label from "./styles/Label.js"
 import Input from "./styles/Input.js"
@@ -25,11 +24,10 @@ function LoginForm ( { onLogin }) {
       setIsLoading(false);
       if (r.ok) {
         r.json().then((user) => onLogin(user));
-      } else {
-        r.json().then((err) => {
-          setErrors([err.error])
-        });
-      }
+    } else {
+      r.json().then((err) => setErrors(err.errors))
+    }
+      
     });
   }
 
@@ -50,9 +48,11 @@ function LoginForm ( { onLogin }) {
       </FormField>
 
       <FormField>
-        {errors.map((err) => (
-          <Error key={err}>{err}</Error>
-        ))}
+        <div>
+          {errors.map((err) => (
+            <ul key={err} className="error-list">Error: {err}</ul>
+          ))}
+        </div>
       </FormField>
     </form>
   );

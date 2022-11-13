@@ -5,8 +5,6 @@ function Review ({ handleReviewDeleteClick, review, handleUpdateReview, user, ba
 
   const [isEditing, setIsEditing] = useState(false);
 
-  console.log(user.username)
-
   return (
     <>
     <div className="review-container">
