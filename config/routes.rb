@@ -8,7 +8,6 @@ Rails.application.routes.draw do
     resources :reviews, only: [:index]
   end
 
-
   get "/users/:user_id/albums", to: 'albums#reviewed_albums'
 
   resources :reviews, only: [:update, :destroy, :create, :index]
@@ -21,3 +20,7 @@ Rails.application.routes.draw do
   # Leave this here to help deploy your app later!
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 end
+
+
+
+    # resources :albums, only: [:index]

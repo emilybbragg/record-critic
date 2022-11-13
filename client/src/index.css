@@ -398,7 +398,6 @@ border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: start;
-  /* gap: 0rem; */
 }
 
 .album-column {

@@ -14,7 +14,6 @@ function App() {
   const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [userReviews, setUserReviews] = useState([]);
 
-
   useEffect(() => {
     fetch("/me").then((r) => {
       if (r.ok) {
@@ -59,7 +58,6 @@ function App() {
           <Route path="/albums/:albumId" element={<AlbumItemPage user={user} />} />
           <Route path="/myreviews" element={<MyReviewsPage user={user} userReviews={userReviews} setUserReviews={setUserReviews} />} />
           <Route path="/myalbums" element={<MyAlbumsPage user={user}
-          // userAlbums={userAlbums} setUserReviews={setUserAlbums}
           />} />
         </Routes>
       </>}

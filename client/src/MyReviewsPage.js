@@ -80,5 +80,4 @@ function MyReviewsPage({ user, userReviews, setUserReviews }) {
   )
 }
 
-
 export default MyReviewsPage;
