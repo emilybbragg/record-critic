@@ -1,32 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Album from "./Album";
 
-function MyAlbumsPage( {user} ) {
-
-  const [userAlbums, setUserAlbums] = useState([]);
-
-  useEffect(() => {
-    if (user) {
-      fetch(`/users/${user.id}/albums`).then((r) => {
-        if(r.ok) {
-          r.json().then((a) => setUserAlbums(a))
-        }
-      })
-    }
-  }, [user])
+function MyAlbumsPage({ user }) {
 
   return (
     <>
       <div className="my-reviews-heading">{user.username}'s Albums:</div>
         <ul className="my-albums-list">
-          {userAlbums?.length > 0 ? (userAlbums.map((album) => (
+          {user.albums?.length > 0 ? (user.albums.map((album) => (
             <>
               <div className="album-container">
                 <Album 
                   key={album.id} 
                   id={album.id} 
-                  album={album} 
-                  name = {album.name}
+                  album={album}
                   user={user}
                 />
               </div>
