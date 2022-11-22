@@ -5,9 +5,8 @@ class ReviewsController < ApplicationController
       album = Album.find(params[:album_id])
       reviews = album.reviews
       render json: reviews
-    elsif params[:user_id]
-      user = User.find(params[:user_id])
-      reviews = user.reviews
+    else
+      reviews = @current_user.reviews
       render json: reviews
     end
   end
@@ -36,7 +35,8 @@ class ReviewsController < ApplicationController
   end
 
   def review_params
-    params.permit(:title, :description, :rating, :album_id, :user_id)
+    params.permit(:title, :description, :rating, :album_id)
+
   end
 
 end
