@@ -27,7 +27,6 @@ function LoginForm ( { onLogin }) {
     } else {
       r.json().then((err) => setErrors(err.errors))
     }
-      
     });
   }
 
