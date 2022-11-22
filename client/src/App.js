@@ -10,44 +10,25 @@ import MyAlbumsPage from "./MyAlbumsPage";
 
 function App() {
   const navigate = useNavigate()
-  const [user, setUser] = useState(null);
-  const [isLoadingUser, setIsLoadingUser] = useState(true);
-  const [userReviews, setUserReviews] = useState([]);
+  const [user, setUser] = useState({
+    reviews: [],
+    albums: []
+  });
 
   useEffect(() => {
     fetch("/me").then((r) => {
       if (r.ok) {
         r.json().then((user) => {
-          if (user) {
             setUser(user)
-          } 
-          else {
-            setIsLoadingUser(false)
-          }
         });
-      } else {
-        setIsLoadingUser(false)
       }
     });
   }, []);
 
-  useEffect(() => {
-    if (user) {
-      setIsLoadingUser(false)
-      fetch (`/users/${user.id}/reviews`)
-        .then((r) => r.json())
-        .then((userReviews) => {
-          setUserReviews(userReviews)
-        })
-    }
-  }, [user])
-
-  if (!user && !isLoadingUser) return <LoginPage user={user} onLogin={setUser} />
+  if (!user) return <LoginPage user={user} onLogin={setUser} />
 
   return (
     <div>
-     {isLoadingUser ?
-      <div>Loading user data...</div>
       : 
       <>
         <NavBar user={user} setUser={setUser}/>
@@ -55,12 +36,11 @@ function App() {
           <Route path="/" element={<LoginPage user={user} onLogin={setUser} />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/albums" element={<AlbumsPage />} />
-          <Route path="/albums/:albumId" element={<AlbumItemPage user={user} />} />
-          <Route path="/myreviews" element={<MyReviewsPage user={user} userReviews={userReviews} setUserReviews={setUserReviews} />} />
-          <Route path="/myalbums" element={<MyAlbumsPage user={user}
-          />} />
+          <Route path="/albums/:albumId" element={<AlbumItemPage user={user} setUser={setUser} />} />
+          <Route path="/myreviews" element={<MyReviewsPage user={user} setUser={setUser}/>} />
+          <Route path="/myalbums" element={<MyAlbumsPage user={user} />} />
         </Routes>
-      </>}
+      </>
     </div>
   );
 }
