@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import EditReview from "./EditReview";
 
-function Review ({ handleReviewDeleteClick, review, handleUpdateReview, user, backgroundWhite }) {
-
+function Review ({ 
+  handleReviewDeleteClick, 
+  review, 
+  handleUpdateReview, 
+  user, 
+  backgroundWhite 
+}) {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
@@ -14,7 +19,7 @@ function Review ({ handleReviewDeleteClick, review, handleUpdateReview, user, ba
         <br></br>
         {review?.description}
         <br></br>
-        <p className="review-username">{review?.user?.username}</p>
+        <p className="review-username">{review?.username || review?.user?.username || ""}</p>
       
        {isEditing && review.user_id == user.id ? (
         <EditReview
