@@ -22,7 +22,9 @@ function EditReview({ review, setIsEditing, handleUpdateReview }) {
       }),
     })
       .then((r) => r.json())
-      .then((updatedDescription) => handleUpdateReview(updatedDescription))
+      .then((data) => {
+        handleUpdateReview(data)
+      })
       .then(() => setIsEditing(false));
   }
 
