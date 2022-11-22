@@ -6,7 +6,15 @@ import styled from "styled-components";
 import Button from "./styles/Button.js";
 import Review from "./Review";
 
-function ReviewList( {user, albumId, reviews, setReviews, handleReviewDeleteClick, handleUpdateReview} ) {
+function ReviewList({ 
+  user, 
+  setUser, 
+  album,
+  setAlbum,
+  albumId, 
+  handleReviewDeleteClick, 
+  handleUpdateReview
+}) {
 
   const [reviewTitle, setReviewTitle] = useState("");
   const [reviewDescription, setReviewDescription] = useState("");
@@ -32,8 +40,26 @@ function ReviewList( {user, albumId, reviews, setReviews, handleReviewDeleteClic
     .then((r) => {
       if (r.ok) {
         r.json().then((newReview) => {
-          const allReviewsWithNew = [...reviews, newReview]
-          setReviews(allReviewsWithNew);
+          setAlbum({ ...album, album_reviews: [...album.album_reviews, newReview] })
+          const previouslyReviewedAlbum = user.albums.find(a => a.id === newReview.album_id)
+          if (previouslyReviewedAlbum) {
+            const userAlbums = user.albums.filter(a => a.id !== previouslyReviewedAlbum.id)
+            const albumWithReview = { ...previouslyReviewedAlbum, album_reviews: [...previouslyReviewedAlbum.album_reviews, newReview] }
+           
+            setUser({ 
+              ...user, 
+              reviews: [...user.reviews, newReview], 
+              albums: [...userAlbums, albumWithReview] 
+            })
+          }
+          else {
+            const albumWithReview = { ...album, album_reviews: [newReview] }
+            setUser({ 
+              ...user, 
+              reviews: [...user.reviews, newReview], 
+              albums: [...user.albums, albumWithReview] 
+            })
+          }
           setReviewTitle("");
           setReviewDescription("");
           setReviewRating("");
@@ -56,26 +82,47 @@ function ReviewList( {user, albumId, reviews, setReviews, handleReviewDeleteClic
   }
   
   function deleteReview(deletedReview) {
-    const updatedReviews = reviews.filter((review) => review.id !== deletedReview.id)
-    setReviews(updatedReviews)
+    const updatedReviews = album.album_reviews.filter((review) => review.id !== deletedReview.id)
+    setAlbum({ ...album, album_reviews: updatedReviews })
+
+    const updatedUserReviews = user.reviews.filter((review) => review.id !== deletedReview.id)
+    const foundReviewForAlbum = updatedUserReviews?.find(review => review.album.id === deletedReview.album_id)
+
+    if (!foundReviewForAlbum) {
+      const newUserAlbums = user.albums.filter(a => a.id !== deletedReview.album_id)
+      setUser({
+        ...user,
+        albums: newUserAlbums,
+        reviews:  updatedUserReviews
+      })
+    }
   }
 
   function handleUpdateReview(updatedReview) {
-    const editedReviews = reviews.map((review) => {
+    const editedReviews = album.album_reviews.map((review) => {
       if (review.id === updatedReview.id) {
         return updatedReview;
       } else {
         return review;
       }
     });
-    setReviews(editedReviews);
+    setAlbum({ ...album, album_reviews: editedReviews })
+
+    const editedUserReviews = user.reviews.map((review) => {
+      if (review.id === updatedReview.id) {
+        return updatedReview;
+      } else {
+        return review;
+      }
+    });
+    setUser( {...user, reviews: editedUserReviews} )
   }
 
   return (
     <>
       <Wrapper>
       <div className="review-container">
-        {reviews?.length > 0 ? (reviews.map((review) => (
+        {album?.album_reviews?.length > 0 ? (album.album_reviews.map((review) => (
           <Review 
             key={review.id} 
             id={review.id} 
