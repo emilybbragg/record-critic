@@ -3,27 +3,17 @@ import { useParams } from "react-router-dom";
 import Album from './Album';
 import ReviewList from './ReviewList';
 
-function AlbumItemPage({ user }) {
+function AlbumItemPage({ user, setUser }) {
 
-  const [currentAlbum, setCurrentAlbum] = useState("");
+  const [currentAlbum, setCurrentAlbum] = useState({ album_reviews: [] });
   const {albumId} = useParams();
-  const [reviews, setReviews] = useState([]);
 
-  const handleGetReviews = () => {
-    fetch(`/albums/${albumId}/reviews`)
-    .then((r) => r.json())
-    .then((reviews) => {
-      setReviews(reviews)
-    })
-  }
-  
   useEffect(() => {
     fetch(`/albums/${albumId}`)
       .then((r) => r.json())
       .then((a) => {
         setCurrentAlbum(a)
       });
-      handleGetReviews();
     }, [albumId])
 
   return (
@@ -33,9 +23,10 @@ function AlbumItemPage({ user }) {
         </div>
         <ReviewList 
           user={user} 
+          setUser={setUser}
           albumId={albumId} 
-          reviews={reviews}
-          setReviews={setReviews}
+          album={currentAlbum}
+          setAlbum={setCurrentAlbum}
         />
     </>
   );
