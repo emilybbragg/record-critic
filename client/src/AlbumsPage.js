@@ -13,9 +13,7 @@ function AlbumsPage() {
   const [albumArtist, setAlbumArtist] = useState([]);
   const [albumYear, setAlbumYear] = useState([]);
   const [albumImage, setAlbumImage] = useState([]);
-  const [isLoadingAlbums, setIsLoadingAlbums] = useState(true);
   const [errors, setErrors] = useState([]);
-
   const [dataIndex, setDataIndex] = useState(0)
   const navigate = useNavigate();
   
@@ -37,17 +35,8 @@ function AlbumsPage() {
         if (albums && albums.length > 0) {
           setAlbums(albums)
         }
-        else {
-          setIsLoadingAlbums(false)
-        }
       })
   }, [])
-
-  useEffect(() => {
-    if (albums.length > 0) {
-      setIsLoadingAlbums(false)
-    }
-  }, [albums])
 
   function handleAlbumSubmit(e) {
     e.preventDefault();
@@ -83,7 +72,6 @@ function AlbumsPage() {
   
   return (
     <Wrapper>
-   { isLoadingAlbums ? <div>Loading Albums...</div> : 
    <>
     <button className="back-button" onClick={handleClickLess}><i class="gg-chevron-left"></i></button>
       <button className="next-button" onClick={handleClickMore}><i class="gg-chevron-right"></i></button>
@@ -138,8 +126,6 @@ function AlbumsPage() {
         </FormField>
       </form>
     </>
-      }
-
     </Wrapper>
   );
 }
